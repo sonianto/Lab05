@@ -73,14 +73,37 @@ public class ProyectoDAO {
     }
 
     public void nuevaTarea(Tarea t){
+        ContentValues values = new ContentValues();
 
+
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.TAREA,t.getDescripcion());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.HORAS_PLANIFICADAS,t.getHorasEstimadas());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.MINUTOS_TRABAJADOS,t.getMinutosTrabajados());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.FINALIZADA,t.getFinalizada());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.PRIORIDAD,t.getPrioridad().getId());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.PROYECTO,t.getProyecto().getId());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.RESPONSABLE,t.getResponsable().getId());
+
+
+     db.insert("TAREA",null,values);
     }
 
     public void actualizarTarea(Tarea t){
+        ContentValues values = new ContentValues();
 
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.TAREA,t.getDescripcion());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.HORAS_PLANIFICADAS,t.getHorasEstimadas());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.MINUTOS_TRABAJADOS,t.getMinutosTrabajados());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.FINALIZADA,t.getFinalizada());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.PRIORIDAD,t.getPrioridad().getId());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.PROYECTO,t.getProyecto().getId());
+        values.put(ProyectoDBMetadata.TablaTareasMetadata.RESPONSABLE,t.getResponsable().getId());
+     db.update(ProyectoDBMetadata.TABLA_TAREAS,values,"_id=?", new String[]{t.getId().toString()});
     }
 
     public void borrarTarea(Tarea t){
+
+        db.delete(ProyectoDBMetadata.TABLA_TAREAS,"_id=?", new String[]{t.getId().toString()});
 
     }
 
@@ -104,6 +127,7 @@ public class ProyectoDAO {
         // retorna una lista de todas las tareas que tardaron más (en exceso) o menos (por defecto)
         // que el tiempo planificado.
         // si la bandera soloTerminadas es true, se busca en las tareas terminadas, sino en todas.
+
         return null;
     }
 
